@@ -1,0 +1,143 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model HeroContent {
+  id             String   @id @default(cuid())
+  headlineLine1  String   @default("We Don't Just Create Content.")
+  headlineLine2  String   @default("We Create Digital Emotion.")
+  headlineLine3  String   @default("")
+  subheadline    String   @default("Kyron Productions is a cinematic content and digital production studio helping brands turn stories into unforgettable experiences.") @db.Text
+  ctaPrimary     String   @default("View Our Work")
+  ctaSecondary   String   @default("Let's Create Together")
+  founderName    String   @default("Your Name")
+  founderTitle   String   @default("Founder & Creative Director")
+  founderImage   String?
+  quoteText      String?  @db.Text
+  updatedAt      DateTime @updatedAt
+}
+
+model PortfolioProject {
+  id          String   @id @default(cuid())
+  title       String
+  filterKey   String   @default("Branding")
+  tag         String   @default("")
+  client      String
+  metric      String
+  metric2     String   @default("")
+  description String   @db.Text
+  thumbnail   String?
+  videoUrl    String?
+  services    Json     @default("[]")
+  results     Json     @default("[]")
+  reels       Json     @default("[]")
+  accent      String   @default("#7b2fff")
+  size        String   @default("medium")
+  visual      String   @default("mesh")
+  order       Int      @default(0)
+  featured    Boolean  @default(false)
+  published   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model TeamMember {
+  id        String   @id @default(cuid())
+  name      String
+  role      String
+  bio       String   @db.Text
+  icon      String   @default("BrainCircuit")
+  color     String   @default("#7b2fff")
+  photo     String?
+  order     Int      @default(0)
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Service {
+  id          String   @id @default(cuid())
+  title       String
+  description String   @db.Text
+  icon        String   @default("Film")
+  color       String   @default("#7b2fff")
+  order       Int      @default(0)
+  published   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Testimonial {
+  id          String   @id @default(cuid())
+  name        String
+  role        String
+  company     String
+  quote       String   @db.Text
+  shortQuote  String?
+  rating      Int      @default(5)
+  initials    String?
+  result      String
+  resultLabel String
+  color       String   @default("#7b2fff")
+  order       Int      @default(0)
+  published   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model FAQ {
+  id        String   @id @default(cuid())
+  question  String
+  answer    String   @db.Text
+  order     Int      @default(0)
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SiteSettings {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String   @db.Text
+  updatedAt DateTime @updatedAt
+}
+
+model SiteStats {
+  id               String   @id @default(cuid())
+  totalViews       Int      @default(120)
+  viewsSuffix      String   @default("M+")
+  totalCampaigns   Int      @default(250)
+  campaignsSuffix  String   @default("+")
+  totalBrands      Int      @default(50)
+  brandsSuffix     String   @default("+")
+  engagementGrowth Int      @default(10)
+  engagementSuffix String   @default("X")
+  updatedAt        DateTime @updatedAt
+}
+
+model SeoMeta {
+  id          String   @id @default(cuid())
+  siteTitle   String   @default("Kyron Productions | Cinematic Content & Digital Production Studio")
+  description String   @default("Kyron Productions is a premium cinematic content and digital production studio.") @db.Text
+  keywords    String   @default("Creative Production Studio, Video Production Agency, Reels Production")
+  ogImage     String?
+  canonical   String   @default("https://kyronproductions.in")
+  gaId        String?
+  updatedAt   DateTime @updatedAt
+}
+
+model Lead {
+  id        String   @id @default(cuid())
+  name      String?
+  email     String?
+  phone     String?
+  message   String   @db.Text
+  source    String   @default("whatsapp")
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
