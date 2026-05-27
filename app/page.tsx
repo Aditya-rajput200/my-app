@@ -26,13 +26,13 @@ async function getSiteData(): Promise<SiteData> {
     for (const row of settingsRows) settings[row.key] = row.value;
 
     return {
-      hero: hero as Record<string, string> | null,
-      team: team as Record<string, string>[],
-      services: services as Record<string, string>[],
-      testimonials: testimonials as Record<string, string>[],
-      faqs: faqs as Record<string, string>[],
-      portfolio: portfolio as Record<string, unknown>[],
-      stats: statsRow as Record<string, string | number> | null,
+      hero: hero as unknown as Record<string, string> | null,
+      team: team as unknown as Record<string, string>[],
+      services: services as unknown as Record<string, string>[],
+      testimonials: testimonials as unknown as Record<string, string>[],
+      faqs: faqs as unknown as Record<string, string>[],
+      portfolio: portfolio as unknown as Record<string, unknown>[],
+      stats: statsRow as unknown as Record<string, string | number> | null,
       settings,
     };
   } catch {

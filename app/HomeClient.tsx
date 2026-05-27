@@ -36,7 +36,7 @@ export default function HomeClient({ data }: { data: SiteData }) {
       <div style={{ opacity: loaded ? 1 : 0, transition: "opacity 0.6s ease" }}>
         <Navbar ready={loaded} />
         <main>
-          <HeroSection ready={loaded} heroData={data.hero} />
+          <HeroSection ready={loaded} />
           <div className="section-divider" />
           <StatsSection statsData={data.stats} />
           <div className="section-divider" />
