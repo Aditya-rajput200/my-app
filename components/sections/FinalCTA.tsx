@@ -1,5 +1,6 @@
 "use client";
 import { useRef, useEffect } from "react";
+import Link from "next/link";
 import { motion, useInView } from "framer-motion";
 
 export default function FinalCTA({ settings }: { settings?: Record<string, string> }) {
@@ -104,8 +105,8 @@ export default function FinalCTA({ settings }: { settings?: Record<string, strin
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.4 }}
         >
-          <a
-            href="#"
+          <Link
+            href="/contact"
             className="btn-primary text-base py-4 px-8 magnetic-btn"
             style={{ boxShadow: "0 0 60px rgba(123,47,255,0.6), 0 4px 30px rgba(123,47,255,0.4)" }}
           >
@@ -113,7 +114,7 @@ export default function FinalCTA({ settings }: { settings?: Record<string, strin
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
               <path d="M3 9h12M9 3l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
-          </a>
+          </Link>
 
           <a
             href={`https://wa.me/${phone}?text=${message}`}

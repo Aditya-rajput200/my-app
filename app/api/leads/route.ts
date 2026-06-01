@@ -15,8 +15,18 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
-    const lead = await db.lead.create({ data: body });
+    const { name, email, phone, service, budget, message, source } = await request.json();
+    const lead = await db.lead.create({
+      data: {
+        name: name ?? null,
+        email: email ?? null,
+        phone: phone ?? null,
+        service: service ?? null,
+        budget: budget ?? null,
+        message: message ?? "",
+        source: source ?? "contact",
+      },
+    });
     return Response.json(lead, { status: 201 });
   } catch (error) {
     console.error("[LEADS POST]", error);

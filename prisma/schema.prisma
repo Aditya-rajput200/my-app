@@ -135,8 +135,10 @@ model Lead {
   name      String?
   email     String?
   phone     String?
+  service   String?
+  budget    String?
   message   String   @db.Text
-  source    String   @default("whatsapp")
+  source    String   @default("contact")
   read      Boolean  @default(false)
   createdAt DateTime @default(now())
 }

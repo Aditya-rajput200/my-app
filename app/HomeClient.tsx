@@ -1,11 +1,12 @@
 "use client";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import IntroLoader from "@/components/sections/IntroLoader";
 import Navbar from "@/components/layout/Navbar";
 import HeroSection from "@/components/sections/HeroSection";
 import TeamSection from "@/components/sections/TeamSection";
 import ServicesSection from "@/components/sections/ServicesSection";
 import WorkShowcase from "@/components/sections/WorkShowcase";
+import ReelsSection from "@/components/sections/ReelsSection";
 import StatsSection from "@/components/sections/StatsSection";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import ProcessSection from "@/components/sections/ProcessSection";
@@ -29,10 +30,11 @@ export interface SiteData {
 
 export default function HomeClient({ data }: { data: SiteData }) {
   const [loaded, setLoaded] = useState(false);
+  const handleLoaderComplete = useCallback(() => setLoaded(true), []);
 
   return (
     <>
-      <IntroLoader onComplete={() => setLoaded(true)} />
+      <IntroLoader onComplete={handleLoaderComplete} />
       <div style={{ opacity: loaded ? 1 : 0, transition: "opacity 0.6s ease" }}>
         <Navbar ready={loaded} />
         <main>
@@ -47,6 +49,8 @@ export default function HomeClient({ data }: { data: SiteData }) {
           <PricingSection />
           <div className="section-divider" />
           <WorkShowcase portfolioData={data.portfolio} />
+          <div className="section-divider" />
+          <ReelsSection portfolioData={data.portfolio} />
           <div className="section-divider" />
           <TestimonialsSection testimonialsData={data.testimonials} />
           <div className="section-divider" />
