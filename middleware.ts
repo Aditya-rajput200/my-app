@@ -2,12 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 
 const COOKIE = "admin_session";
 
-function hexToBytes(hex: string): Uint8Array {
+function hexToBuffer(hex: string): ArrayBuffer {
   const bytes = new Uint8Array(hex.length / 2);
   for (let i = 0; i < bytes.length; i++) {
     bytes[i] = parseInt(hex.slice(i * 2, i * 2 + 2), 16);
   }
-  return bytes;
+  // .slice(0) returns a plain ArrayBuffer, satisfying BufferSource
+  return bytes.buffer.slice(0);
 }
 
 async function isValidToken(token: string, secret: string): Promise<boolean> {
@@ -22,9 +23,10 @@ async function isValidToken(token: string, secret: string): Promise<boolean> {
     // Expire after 24 hours
     if (Date.now() - timestamp > 86_400_000) return false;
 
+    const enc = new TextEncoder();
     const key = await crypto.subtle.importKey(
       "raw",
-      new TextEncoder().encode(secret),
+      enc.encode(secret),
       { name: "HMAC", hash: "SHA-256" },
       false,
       ["verify"],
@@ -32,8 +34,8 @@ async function isValidToken(token: string, secret: string): Promise<boolean> {
     return await crypto.subtle.verify(
       "HMAC",
       key,
-      hexToBytes(sig),
-      new TextEncoder().encode(ts),
+      hexToBuffer(sig),
+      enc.encode(ts),
     );
   } catch {
     return false;

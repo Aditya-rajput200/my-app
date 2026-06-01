@@ -1,9 +1,9 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { Suspense, useState, useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
-export default function AdminLoginPage() {
+function LoginForm() {
   const router = useRouter();
   const params = useSearchParams();
   const from = params.get("from") ?? "/admin";
@@ -265,5 +265,13 @@ export default function AdminLoginPage() {
         </div>
       </motion.div>
     </div>
+  );
+}
+
+export default function AdminLoginPage() {
+  return (
+    <Suspense>
+      <LoginForm />
+    </Suspense>
   );
 }
