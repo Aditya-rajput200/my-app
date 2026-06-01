@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   LayoutGrid, Film, Users, Layers, MessageSquare, HelpCircle,
@@ -1278,10 +1279,17 @@ function ContactsPanel({ toast }: { toast: (m: string, t: "success" | "error") =
 
 /* ─── Root Dashboard ─────────────────────────────────────────────────────────── */
 export default function AdminDashboard() {
+  const router = useRouter();
   const [active, setActive] = useState<Section>("overview");
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [toastData, setToastData] = useState<{ msg: string; type: "success" | "error" } | null>(null);
   const showToast = useCallback((msg: string, type: "success" | "error") => setToastData({ msg, type }), []);
+
+  async function handleLogout() {
+    await fetch("/api/auth/logout", { method: "POST" });
+    router.push("/admin/login");
+    router.refresh();
+  }
 
   const panels: Record<Section, React.ReactNode> = {
     overview: <OverviewPanel toast={showToast} />,
@@ -1322,8 +1330,17 @@ export default function AdminDashboard() {
             ))}
           </div>
         </nav>
-        <div className="p-4 border-t border-[rgba(123,47,255,0.15)]">
+        <div className="p-4 border-t border-[rgba(123,47,255,0.15)] space-y-2">
           <a href="/" className="flex items-center gap-2 text-xs text-white/40 hover:text-white transition-colors">← Back to Website</a>
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center gap-2 text-xs text-red-400/60 hover:text-red-400 transition-colors px-1 py-1"
+          >
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M5 1H2a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3M9 10l3-3.5L9 3M12 6.5H5" />
+            </svg>
+            Sign Out
+          </button>
         </div>
       </aside>
 
